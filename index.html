@@ -162,7 +162,7 @@
             if(n < bestN) { bestD = d; bestN = n; }
         }
         return `<div class="highlight-box" style="border-left:4px solid #16a34a">
-             ${label}: Provide <b>${bestN}</b> bars of <b>${bestD}mm �</b>
+            🏗️ ${label}: Provide <b>${bestN}</b> bars of <b>${bestD}mm Ø</b>
         </div>`;
     }
 
@@ -195,8 +195,8 @@
         html += `<div class="step">
             <h3>Step 1: Design Load & Depth</h3>
             ${ !isFactored ? 
-                `<div class="math">${variable('M','u')} = 1.5 � ${variable('M')}</div>
-                 <div class="math">= 1.5 � ${fmt(M_in)} = ${fmt(Mu)} kNm</div>` 
+                `<div class="math">${variable('M','u')} = 1.5 × ${variable('M')}</div>
+                 <div class="math">= 1.5 × ${fmt(M_in)} = ${fmt(Mu)} kNm</div>` 
                 : `<div class="math">${variable('M','u')} = ${fmt(Mu)} kNm (Already Factored)</div>`
             }
             <div class="math">${variable('d')} = ${variable('D')} - ${variable("d'")}</div>
@@ -208,12 +208,12 @@
             <h3>Step 2: Check Section Capacity</h3>
             <div class="info-tag">For Fe ${fy}, Limiting Coefficient (Q) = <b>${Q}</b></div>
             
-            <div class="math">${variable('M','u,lim')} = <b>${Q}</b> ${variable('f','ck')} ${variable('b')} ${variable('d')}�</div>
-            <div class="math">= <b>${Q}</b> � ${fmt(fck)} � ${fmt(b)} � ${fmt(d)}�</div>
+            <div class="math">${variable('M','u,lim')} = <b>${Q}</b> ${variable('f','ck')} ${variable('b')} ${variable('d')}²</div>
+            <div class="math">= <b>${Q}</b> × ${fmt(fck)} × ${fmt(b)} × ${fmt(d)}²</div>
             <div class="math">= ${fmt(Mu_lim)} kNm</div>
             
             <div class="highlight-box ${isDoubly ? 'warn' : ''}">
-                ${isDoubly ? ` Mu (${fmt(Mu)}) > Mu,lim (${fmt(Mu_lim)})  Design Doubly Reinforced` : ` Mu (${fmt(Mu)}) < Mu,lim (${fmt(Mu_lim)})  Design Singly Reinforced`}
+                ${isDoubly ? `⚠️ Mu (${fmt(Mu)}) > Mu,lim (${fmt(Mu_lim)}) → Design Doubly Reinforced` : `✅ Mu (${fmt(Mu)}) < Mu,lim (${fmt(Mu_lim)}) → Design Singly Reinforced`}
             </div>
         </div>`;
 
@@ -233,7 +233,7 @@
                 <h3>Step 3: Calculate Required Neutral Axis (${variable('X','u')})</h3>
                 <div style="font-size:0.95rem; color:#475569; margin-bottom:10px; font-weight:600;">Equating Compressive Moment to Factored Moment:</div>
                 <div class="math">${variable('M','u')} = 0.36 ${variable('f','ck')} ${variable('b')} ${variable('X','u')} (${variable('d')} - 0.42 ${variable('X','u')})</div>
-                <div class="math">${fmt(Mu)}�10 = 0.36 � ${fmt(fck)} � ${fmt(b)} � ${variable('X','u')} (${fmt(d)} - 0.42 ${variable('X','u')})</div>
+                <div class="math">${fmt(Mu)}×10⁶ = 0.36 × ${fmt(fck)} × ${fmt(b)} × ${variable('X','u')} (${fmt(d)} - 0.42 ${variable('X','u')})</div>
                 <div class="highlight-box" style="background:#f1f5f9; border-color:#cbd5e1; color:#334155;">
                     Solving Quadratic Eq... <br>Required ${variable('X','u')} = <b>${fmt(Xu)} mm</b>
                 </div>
@@ -245,9 +245,9 @@
                     ${variable('A','st')} = <div class="frac"><span class="frac-top">0.36 ${variable('f','ck')} ${variable('b')} ${variable('X','u')}</span><span class="frac-bot">0.87 ${variable('f','y')}</span></div>
                 </div>
                 <div class="math">
-                     = <div class="frac"><span class="frac-top">0.36 � ${fmt(fck)} � ${fmt(b)} � ${fmt(Xu)}</span><span class="frac-bot">0.87 � ${fmt(fy)}</span></div>
+                     = <div class="frac"><span class="frac-top">0.36 × ${fmt(fck)} × ${fmt(b)} × ${fmt(Xu)}</span><span class="frac-bot">0.87 × ${fmt(fy)}</span></div>
                 </div>
-                <div class="math">= <b>${fmt(Ast)} mm�</b></div>
+                <div class="math">= <b>${fmt(Ast)} mm²</b></div>
                 ${getBarDetailing(Ast, 'Tension Steel')}
             </div>`;
 
@@ -260,30 +260,30 @@
 
             if(fy == 250) {
                 tableContent.innerHTML = `
-                <h4 style="margin-bottom:10px; color:#475569; font-weight: 800;"> Steel Stress for Fe 250</h4>
+                <h4 style="margin-bottom:10px; color:#475569; font-weight: 800;">ℹ️ Steel Stress for Fe 250</h4>
                 <div class="highlight-box" style="margin-top:0;">
                     For Mild Steel (Fe 250), table is not required.<br>
-                    Stress is constant: <b>fsc = 0.87 � 250 = 217.5 N/mm�</b>
+                    Stress is constant: <b>fsc = 0.87 × 250 = 217.5 N/mm²</b>
                 </div>`;
             } else if(fy == 415) {
                 tableContent.innerHTML = `
-                <h4 style="margin-bottom:10px; color:#475569; font-weight: 800;"> Reference Table (For Fe 415)</h4>
+                <h4 style="margin-bottom:10px; color:#475569; font-weight: 800;">📖 Reference Table (For Fe 415)</h4>
                 <table class="ref-table">
                     <tr><th>d'/d Ratio</th><th>fsc (Fe 415)</th></tr>
-                    <tr><td>0.05</td><td>355 N/mm�</td></tr>
-                    <tr><td>0.10</td><td>353 N/mm�</td></tr>
-                    <tr><td>0.15</td><td>342 N/mm�</td></tr>
-                    <tr><td>0.20</td><td>329 N/mm�</td></tr>
+                    <tr><td>0.05</td><td>355 N/mm²</td></tr>
+                    <tr><td>0.10</td><td>353 N/mm²</td></tr>
+                    <tr><td>0.15</td><td>342 N/mm²</td></tr>
+                    <tr><td>0.20</td><td>329 N/mm²</td></tr>
                 </table>`;
             } else {
                 tableContent.innerHTML = `
-                <h4 style="margin-bottom:10px; color:#475569; font-weight: 800;"> Reference Table (For Fe 500)</h4>
+                <h4 style="margin-bottom:10px; color:#475569; font-weight: 800;">📖 Reference Table (For Fe 500)</h4>
                 <table class="ref-table">
                     <tr><th>d'/d Ratio</th><th>fsc (Fe 500)</th></tr>
-                    <tr><td>0.05</td><td>424 N/mm�</td></tr>
-                    <tr><td>0.10</td><td>412 N/mm�</td></tr>
-                    <tr><td>0.15</td><td>395 N/mm�</td></tr>
-                    <tr><td>0.20</td><td>370 N/mm�</td></tr>
+                    <tr><td>0.05</td><td>424 N/mm²</td></tr>
+                    <tr><td>0.10</td><td>412 N/mm²</td></tr>
+                    <tr><td>0.15</td><td>395 N/mm²</td></tr>
+                    <tr><td>0.20</td><td>370 N/mm²</td></tr>
                 </table>`;
             }
             
@@ -291,9 +291,9 @@
             const Xu_max = Xu_max_ratio * d;
             html += `<div class="step doubly">
                 <h3>Step 3: Calculate Max Neutral Axis (${variable('X','u,max')})</h3>
-                <div class="math">${variable('X','u,max')} = ${variable('k')} � ${variable('d')}</div>
+                <div class="math">${variable('X','u,max')} = ${variable('k')} × ${variable('d')}</div>
                 <div class="info-tag">For Fe ${fy}, constant k = <b>${Xu_max_ratio}</b></div>
-                <div class="math">= ${fmt(Xu_max_ratio)} � ${fmt(d)} = <b>${fmt(Xu_max)} mm</b></div>
+                <div class="math">= ${fmt(Xu_max_ratio)} × ${fmt(d)} = <b>${fmt(Xu_max)} mm</b></div>
             </div>`;
 
             // Step 4: Asc
@@ -321,7 +321,7 @@
                     <div>ratio ${variable("d'")}/${variable('d')} = ${fmt(cover)}/${fmt(d)} = <b>${fmt(ratio)}</b></div>
                     <div style="margin-top:5px;">
                         ${ fy == 250 ? 'For Fe 250, stress is constant.' : `From Fe ${fy} Table, at ratio ${fmt(ratio)}:` }
-                        <b>${variable('f','sc')} = ${fsc} N/mm�</b>
+                        <b>${variable('f','sc')} = ${fsc} N/mm²</b>
                     </div>
                 </div>
 
@@ -329,9 +329,9 @@
                     ${variable('A','sc')} = <div class="frac"><span class="frac-top">${variable('M','u2')}</span><span class="frac-bot">${variable('f','sc')} (${variable('d')} - ${variable("d'")})</span></div>
                 </div>
                 <div class="math">
-                     = <div class="frac"><span class="frac-top">${fmt(Mu2)} � 10</span><span class="frac-bot">${fsc} (${fmt(d)} - ${fmt(cover)})</span></div>
+                     = <div class="frac"><span class="frac-top">${fmt(Mu2)} × 10⁶</span><span class="frac-bot">${fsc} (${fmt(d)} - ${fmt(cover)})</span></div>
                 </div>
-                <div class="math">= <b>${fmt(Asc)} mm�</b></div>
+                <div class="math">= <b>${fmt(Asc)} mm²</b></div>
                 ${getBarDetailing(Asc, 'Compression (Top)')}
             </div>`;
 
@@ -347,7 +347,7 @@
                     ${variable('A','st1')} = <div class="frac"><span class="frac-top">0.36 ${variable('f','ck')} ${variable('b')} ${variable('X','u,max')}</span><span class="frac-bot">0.87 ${variable('f','y')}</span></div>
                 </div>
                 <div class="math">
-                     = <div class="frac"><span class="frac-top">0.36 � ${fmt(fck)} � ${fmt(b)} � ${fmt(Xu_max)}</span><span class="frac-bot">0.87 � ${fmt(fy)}</span></div> = ${fmt(Ast1)} mm�
+                     = <div class="frac"><span class="frac-top">0.36 × ${fmt(fck)} × ${fmt(b)} × ${fmt(Xu_max)}</span><span class="frac-bot">0.87 × ${fmt(fy)}</span></div> = ${fmt(Ast1)} mm²
                 </div>
                 
                 <div style="margin:15px 0 5px 0; font-weight:700; color:#475569;">Part 2: Excess Moment</div>
@@ -355,10 +355,10 @@
                     ${variable('A','st2')} = <div class="frac"><span class="frac-top">${variable('A','sc')} ${variable('f','sc')}</span><span class="frac-bot">0.87 ${variable('f','y')}</span></div>
                 </div>
                 <div class="math">
-                     = <div class="frac"><span class="frac-top">${fmt(Asc)} � ${fmt(fsc)}</span><span class="frac-bot">0.87 � ${fmt(fy)}</span></div> = ${fmt(Ast2)} mm�
+                     = <div class="frac"><span class="frac-top">${fmt(Asc)} × ${fmt(fsc)}</span><span class="frac-bot">0.87 × ${fmt(fy)}</span></div> = ${fmt(Ast2)} mm²
                 </div>
 
-                <div class="math">Total ${variable('A','st')} = ${fmt(Ast1)} + ${fmt(Ast2)} = <b>${fmt(Ast_total)} mm�</b></div>
+                <div class="math">Total ${variable('A','st')} = ${fmt(Ast1)} + ${fmt(Ast2)} = <b>${fmt(Ast_total)} mm²</b></div>
                 ${getBarDetailing(Ast_total, 'Tension (Bottom)')}
             </div>`;
         }
